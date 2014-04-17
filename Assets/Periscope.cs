@@ -1,45 +1,47 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Controller : MonoBehaviour {
+public class Periscope : MonoBehaviour {
 	
-	public Transform indicator;
+	public Transform orientationIndicator;
 	
+	private bool buttonControl;  //gui states - gyro, buttons, pause/menu ; later maybe - dive, target
+
 	private Compass compass;
 	private Gyroscope gyro;
-	private Transform trans;
-	private Vector3 initialHeading;
-	private Vector3 lastHeading;
+	private Transform camTrans;
+	
+	private float angularHeadingAdjustment;
 	
 	// Use this for initialization
 	void Start () {
+#if UNITY_ANDROID
 		Screen.orientation = ScreenOrientation.Landscape;
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
-		trans = transform;
 		gyro = Input.gyro;
 		gyro.enabled = true;
 		compass = Input.compass;
 		compass.enabled = true;
-		initialHeading = HorizontalHeading();
-		lastHeading = initialHeading;
+#endif
+		camTrans = transform;
+		buttonControl = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		var currentHeading = HorizontalHeading();
-		indicator.forward = currentHeading;
-		var angle = Vector3.Angle(lastHeading, currentHeading);
-		angle = gyro.userAcceleration.y < 0 ? -angle : angle;
-		trans.Rotate(0, angle, 0);
-		lastHeading = currentHeading;
+		camTrans.Rotate(0, angularHeadingAdjustment, 0);
 	}
 	
-	private Vector3 HorizontalHeading () {
+	public void AdjustHeading (float deltaAngle) {
+		angularHeadingAdjustment = deltaAngle;
+	}
+	
+	//stuff that doesn't work
+	private Vector3 HorizontalCompassHeading () {
 		var heading = ReorientNeutral(compass.rawVector);
 		var orthoHeading = heading - gyro.gravity;
 		return AxisFix(orthoHeading);
 	}
-	
 	private Vector3 ReorientNeutral (Vector3 heading) {
 		//landscape left gravity = (-1, 0, 0)
 		//face up = (0, 0, 1) ; face down = (0, 0, -1) ; portrait = (0, -1, 0)
@@ -47,7 +49,6 @@ public class Controller : MonoBehaviour {
 		var reverseTilt = Quaternion.FromToRotation(gyro.gravity, neutral); 
 		return reverseTilt * heading;
 	}
-	
 	private Vector3 AxisFix (Vector3 vector) {
 		return new Vector3(-vector.y, vector.x, -vector.z);
 	}
