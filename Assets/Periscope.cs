@@ -29,11 +29,16 @@ public class Periscope : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		camTrans.Rotate(0, angularHeadingAdjustment, 0);
+		if (angularHeadingAdjustment != 0) {
+			Debug.Log("Turning " + angularHeadingAdjustment);
+			camTrans.Rotate(0, angularHeadingAdjustment, 0);
+			angularHeadingAdjustment = 0;
+		}
 	}
 	
 	public void AdjustHeading (float deltaAngle) {
 		angularHeadingAdjustment = deltaAngle;
+		Debug.Log("Turn " + deltaAngle);
 	}
 	
 	//stuff that doesn't work

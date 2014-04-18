@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public abstract class State {
 	
 	protected StateContext initialContext;
-	protected List<PanelMap> panelMaps;
+	protected List<PanelMap> panelMaps = new List<PanelMap>();
 
 	public virtual void Enter (StateContext context) {
 		initialContext = context;

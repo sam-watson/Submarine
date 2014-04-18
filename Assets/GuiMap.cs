@@ -3,5 +3,7 @@ using System.Collections;
 
 public class GuiMap : MonoBehaviour {
 
-	public PanelMap navButtons;
+	public Periscope periscope;
+	
+	public NavPanelMap navButtons;
 }

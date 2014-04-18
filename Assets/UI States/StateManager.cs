@@ -19,5 +19,6 @@ public class StateManager : MonoBehaviour {
 			Debug.Log("!!!Created more than one instance of StateManager!!!");
 		}
 		_Instance = this;
+		currentState = new ButtonNavState();
 	}
 }
