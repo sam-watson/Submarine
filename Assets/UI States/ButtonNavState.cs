@@ -19,17 +19,19 @@ public class ButtonNavState : State {
 		Enter(new StateContext());
 	}
 	
-	void Update () {
-		if (headingDelta != 0) {
-			periscope.AdjustHeading(headingDelta);
-		}
-	}
+//	void Update () {
+//		if (headingDelta != 0) {
+//			periscope.AdjustHeading(headingDelta);
+//		}
+//	}
 
 	public override void Enter (StateContext context)
 	{
 		base.Enter (context);
-		EventDelegate.Set( navPanelMap.leftButton.onClick, PanLeft );
-		EventDelegate.Set( navPanelMap.rightButton.onClick, PanRight );
+		navPanelMap.leftButton.GetComponent<NavButtonHelper>().Setup(-2f, periscope);
+		navPanelMap.rightButton.GetComponent<NavButtonHelper>().Setup(5f, periscope);
+//		EventDelegate.Set( navPanelMap.leftButton.onClick, PanLeft );
+//		EventDelegate.Set( navPanelMap.rightButton.onClick, PanRight );
 	}
 	
 	public override void Exit ()
@@ -40,10 +42,12 @@ public class ButtonNavState : State {
 	}
 	
 	public void PanLeft () {
-		headingDelta = headingDelta == 0 ? -2f : 0;
+		periscope.AdjustHeading(-5f);
+		//headingDelta = headingDelta == 0 ? -2f : 0;
 	}
 	
 	public void PanRight () {
-		headingDelta = headingDelta == 0 ? 2f : 0;
+		periscope.AdjustHeading(5f);
+		//headingDelta = headingDelta == 0 ? 2f : 0;
 	}
 }

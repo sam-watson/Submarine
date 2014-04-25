@@ -38,7 +38,7 @@ Material:
         first:
           name: _ColorControlCube
         second:
-          m_Texture: {fileID: 8900000, guid: 98c330f39d11745ad0004adb8d76c639, type: 3}
+          m_Texture: {fileID: 8900000, guid: 006a5f739d1105f6a000538a2aef8c59, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -77,7 +77,7 @@ Material:
       data:
         first:
           name: _WaveScale
-        second: .0702830181
+        second: .125997305
       data:
         first:
           name: _Highlight
@@ -126,7 +126,7 @@ Material:
       data:
         first:
           name: _horizonColor
-        second: {r: .165530786, g: .241492584, b: .381818175, a: 0}
+        second: {r: 0, g: .12395566, b: .352941155, a: 0}
       data:
         first:
           name: _ColorControl_ST

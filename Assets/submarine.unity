@@ -18,8 +18,8 @@ RenderSettings:
   m_FogDensity: .00999999978
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientLight: {r: .200000003, g: .200000003, b: .200000003, a: 1}
-  m_SkyboxMaterial: {fileID: 0}
+  m_AmbientLight: {r: 1, g: 1, b: 1, a: 1}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 16522f49031ff414abdf1f83f1b6a36c, type: 2}
   m_HaloStrength: .5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -344,6 +344,14 @@ Prefab:
       propertyPath: mTrueTypeFont
       value: 
       objectReference: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 400018, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -896.467957
+      objectReference: {fileID: 0}
+    - target: {fileID: 400026, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 896.467957
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
   m_RootGameObject: {fileID: 1613990725}
@@ -1055,6 +1063,7 @@ GameObject:
   - 114: {fileID: 1521256331}
   - 114: {fileID: 1521256330}
   - 114: {fileID: 1521256329}
+  - 114: {fileID: 1521256334}
   m_Layer: 8
   m_Name: Left Button
   m_TagString: Untagged
@@ -1136,12 +1145,23 @@ Transform:
   m_PrefabInternal: {fileID: 455191007}
   m_GameObject: {fileID: 1521256328}
   m_LocalRotation: {x: 0, y: 0, z: .707106829, w: .707106829}
-  m_LocalPosition: {x: -329.929657, y: 0, z: 0}
+  m_LocalPosition: {x: -896.467957, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2045646478}
   - {fileID: 1557242986}
   m_Father: {fileID: 1756191464}
+--- !u!114 &1521256334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1521256328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 836c78de1d811bf4d970dea6257e8d58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1557242985
 GameObject:
   m_ObjectHideFlags: 0
@@ -1264,6 +1284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b097fc6038f8e7f44b1e59e5fe0821ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  periscope: {fileID: 972887067}
   navButtons: {fileID: 1756191466}
 --- !u!114 &1613990729
 MonoBehaviour:
@@ -1276,7 +1297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: decc4a2bde8660c46b7f40d9ccff265b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  guiMap: {fileID: 0}
+  guiMap: {fileID: 1613990728}
 --- !u!1 &1624053307
 GameObject:
   m_ObjectHideFlags: 0
@@ -1361,6 +1382,7 @@ GameObject:
   - 114: {fileID: 1652549824}
   - 114: {fileID: 1652549823}
   - 114: {fileID: 1652549822}
+  - 114: {fileID: 1652549826}
   m_Layer: 8
   m_Name: Right Button
   m_TagString: Untagged
@@ -1375,7 +1397,7 @@ Transform:
   m_PrefabInternal: {fileID: 455191007}
   m_GameObject: {fileID: 1652549820}
   m_LocalRotation: {x: 0, y: 0, z: .707106829, w: .707106829}
-  m_LocalPosition: {x: 329.929657, y: 0, z: 0}
+  m_LocalPosition: {x: 896.467957, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1243310026}
@@ -1448,6 +1470,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 200.000015, y: 50.0000038, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1652549826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1652549820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 836c78de1d811bf4d970dea6257e8d58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1756191463
 GameObject:
   m_ObjectHideFlags: 0
