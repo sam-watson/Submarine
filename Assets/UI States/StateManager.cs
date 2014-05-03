@@ -4,6 +4,7 @@ using System.Collections;
 public class StateManager : MonoBehaviour {
 	
 	public GuiMap guiMap;
+	public Mobs mobs;
 	
 	[HideInInspector] public State currentState;
 	
@@ -19,6 +20,7 @@ public class StateManager : MonoBehaviour {
 			Debug.Log("!!!Created more than one instance of StateManager!!!");
 		}
 		_Instance = this;
-		currentState = new ButtonNavState();
+		new ButtonNavState().Enter(new StateContext());
+		mobs.InitSharks(20);
 	}
 }

@@ -32,5 +32,6 @@ public abstract class State {
 		foreach (var panelMap in panelMaps) {
 			panelMap.gameObject.SetActive(false);
 		}
+		panelMaps.Clear();
 	}
 }

@@ -15,21 +15,13 @@ public class ButtonNavState : State {
 		navPanelMap = guiMap.navButtons;
 		periscope = guiMap.periscope;
 		panelMaps.Add(navPanelMap);
-		
-		Enter(new StateContext());
 	}
-	
-//	void Update () {
-//		if (headingDelta != 0) {
-//			periscope.AdjustHeading(headingDelta);
-//		}
-//	}
 
 	public override void Enter (StateContext context)
 	{
 		base.Enter (context);
-		navPanelMap.leftButton.GetComponent<NavButtonHelper>().Setup(-2f, periscope);
-		navPanelMap.rightButton.GetComponent<NavButtonHelper>().Setup(5f, periscope);
+		navPanelMap.leftButton.GetComponent<NavButtonHelper>().Setup(-3f, periscope);
+		navPanelMap.rightButton.GetComponent<NavButtonHelper>().Setup(3f, periscope);
 //		EventDelegate.Set( navPanelMap.leftButton.onClick, PanLeft );
 //		EventDelegate.Set( navPanelMap.rightButton.onClick, PanRight );
 	}
