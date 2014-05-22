@@ -243,7 +243,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: 005a03105f0d1404ea2830bd00c9832f, type: 2}
       propertyPath: mobSpeed
-      value: 36
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 400018, guid: 005a03105f0d1404ea2830bd00c9832f, type: 2}
       propertyPath: m_LocalScale.x
@@ -252,6 +252,14 @@ Prefab:
     - target: {fileID: 400018, guid: 005a03105f0d1404ea2830bd00c9832f, type: 2}
       propertyPath: m_LocalScale.z
       value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 005a03105f0d1404ea2830bd00c9832f, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100018, guid: 005a03105f0d1404ea2830bd00c9832f, type: 2}
+      propertyPath: m_Name
+      value: Water
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 005a03105f0d1404ea2830bd00c9832f, type: 2}
@@ -398,11 +406,11 @@ Prefab:
       objectReference: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 400018, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -329.929657
+      value: -488.342407
       objectReference: {fileID: 0}
     - target: {fileID: 400026, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 329.929657
+      value: 488.342407
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
@@ -498,7 +506,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &875025845
 Transform:
   m_ObjectHideFlags: 0
@@ -693,6 +701,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1196552069}
   - 114: {fileID: 1196552070}
+  - 114: {fileID: 1196552071}
   m_Layer: 0
   m_Name: Sub Scene
   m_TagString: Untagged
@@ -728,8 +737,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mobPrefab: {fileID: 100000, guid: c5831476dffa42a40a71dad4b2658761, type: 2}
-  mobSpeed: 36
+  mobSpeed: 10
   minDist: 10
+  pathSize: 5
+  pathFat: 10
+--- !u!114 &1196552071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1196552068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d54581dd0eeb0646a3307d30399ad02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  water: {fileID: 1309810234}
 --- !u!1 &1197966253
 GameObject:
   m_ObjectHideFlags: 0
@@ -821,8 +844,9 @@ GameObject:
   - 33: {fileID: 1309810233}
   - 23: {fileID: 1309810232}
   - 114: {fileID: 1309810231}
+  - 65: {fileID: 1309810234}
   m_Layer: 4
-  m_Name: Daylight Simple Water
+  m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -881,6 +905,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 296682586}
   m_GameObject: {fileID: 1309810229}
   m_Mesh: {fileID: 4300006, guid: ce8d79c79d11b8f9d00076e98d76c639, type: 3}
+--- !u!65 &1309810234
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1309810229}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1000, y: .0500000007, z: 1000}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1336235141
 GameObject:
   m_ObjectHideFlags: 0
@@ -1169,7 +1205,7 @@ Transform:
   m_PrefabInternal: {fileID: 455191007}
   m_GameObject: {fileID: 1521256328}
   m_LocalRotation: {x: 0, y: 0, z: .707106829, w: .707106829}
-  m_LocalPosition: {x: -329.929657, y: 0, z: 0}
+  m_LocalPosition: {x: -488.342407, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2045646478}
@@ -1323,7 +1359,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guiMap: {fileID: 1613990728}
   mobs: {fileID: 1196552070}
-  currentState: {fileID: 0}
 --- !u!1 &1624053307
 GameObject:
   m_ObjectHideFlags: 0
@@ -1423,7 +1458,7 @@ Transform:
   m_PrefabInternal: {fileID: 455191007}
   m_GameObject: {fileID: 1652549820}
   m_LocalRotation: {x: 0, y: 0, z: .707106829, w: .707106829}
-  m_LocalPosition: {x: 329.929657, y: 0, z: 0}
+  m_LocalPosition: {x: 488.342407, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1243310026}
