@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StateContext : MonoBehaviour {
+public class StateContext {
 
 	//nunyet
 }
