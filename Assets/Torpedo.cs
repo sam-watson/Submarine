@@ -30,13 +30,14 @@ public class Torpedo : MonoBehaviour {
 		var torpedobj = (GameObject)GameObject.Instantiate(prefab);
 		var torpedo = torpedobj.AddComponent<Torpedo>();
 		//torpedo behavior below, needs to be parameterized - launch point, starting path, ease, onCompletes, target, speed
-		// Pre-launch setup - target (position, speed, turn, onCompletes - type properties set by class or enum)
+		// Pre-launch setup - target
+		//	(position, speed, turn, launch, distance, onCompletes - type properties set by class or enum)
 		torpedo.target = target;
 		torpedo.trans.position = camTrans.parent.position;
 		torpedo.travelSpeed = 10f;
 		torpedo.turnRadius = 5f;
-		var launchDest = torpedo.GetLaunchTrajectory(target);
-		float time = (launchDest - torpedo.trans.position).magnitude / torpedo.travelSpeed;
+		var launchDest = torpedo.GetForwardTrajectory(5f);
+		float time = torpedo.GetTravelTime( (launchDest - torpedo.trans.position).magnitude );
 		torpedo.tween = LeanTween.move(torpedobj, launchDest, time);
 		torpedo.tween.setEase(LeanTweenType.easeInCubic);
 		torpedo.tween.setOnComplete(torpedo.OnLaunchComplete);
@@ -50,10 +51,14 @@ public class Torpedo : MonoBehaviour {
 	}
 	
 	//startPath = straight launch path method
-	private Vector3 GetLaunchTrajectory (Vector3 target) {
+	private Vector3 GetForwardTrajectory (float distance) {
 		OrientLaunchPath();
 		var ray = new Ray(camTrans.parent.position, camTrans.forward);
-		return ray.GetPoint(5);
+		return ray.GetPoint(distance);
+	}
+	
+	private float GetTravelTime (float distance) {
+		return distance/travelSpeed;
 	}
 	
 	private void OrientLaunchPath () {
@@ -71,29 +76,32 @@ public class Torpedo : MonoBehaviour {
 	}
 	
 	private void TurnToTarget () {
-		//determine turn end point
-		var startPoint = trans.position;
-		var crowFlies = target - startPoint;
-		if (crowFlies.magnitude < turnRadius*2) {
-			//target is within turning radius - torpedo needs to turn earlier or later to make it
-			return;
-		}
+		var pos = trans.position;
+		var crowFlies = target - pos;
 		var tan = crowFlies;
 		var fwd = trans.forward;
-		bool obtuse = Vector3.Angle(crowFlies, fwd) > 90f;
-		bool leftHand = transform.InverseTransformPoint(target).x < 0f;
 		var rot = Vector3.up;
 		Vector3.OrthoNormalize(ref fwd, ref tan, ref rot);
-		Ray ray = new Ray(startPoint, tan);
+		Ray ray = new Ray(pos, tan);
 		var turnOrigin = ray.GetPoint(turnRadius);
-		ray.origin = turnOrigin;
-		ray.direction = -tan;
 		var originToTarget = target - turnOrigin;
+		if (originToTarget.magnitude < turnRadius) {
+			//target is within turning radius, torpedo needs to turn earlier or later to make it
+			var adj = GetForwardTrajectory(5f);
+			float time = GetTravelTime(5f);
+			tween = LeanTween.move(gameObject, pos + adj, time);
+			tween.setOnComplete(TurnToTarget);
+			return;
+			// could also use quadratic equation to find precise distance - vector intersect with circle on plane
+		}
+		ray = new Ray(turnOrigin, -tan);
 		var tanToTargetAngle = Vector3.Angle(-tan, originToTarget);
+		bool obtuse = Vector3.Angle(crowFlies, fwd) > 90f;
 		if (obtuse) tanToTargetAngle = 360f - tanToTargetAngle;
 		//var postTurnDist = Mathf.Sqrt(originToTarget.magnitude*originToTarget.magnitude - turnRadius*turnRadius);
 		var theta = Mathf.Acos( turnRadius/originToTarget.magnitude )* Mathf.Rad2Deg;
 		var turnAngle = tanToTargetAngle-theta;
+		bool leftHand = trans.InverseTransformPoint(target).x < 0f;
 		if (leftHand) turnAngle *= -1;
 		TurnAbout(turnOrigin, rot, turnAngle);
 	}
@@ -103,12 +111,13 @@ public class Torpedo : MonoBehaviour {
 		var parenTrans = rotParent.transform;
 		parenTrans.position = point;
 		trans.parent = parenTrans;
-		var time = Mathf.Abs(angle/360) * 2*Mathf.PI*turnRadius / travelSpeed;
+		var dist = Mathf.Abs(angle/360) * 2*Mathf.PI*turnRadius;
+		var time = GetTravelTime(dist);
 		tween = LeanTween.rotateAround(rotParent, rotAxis, angle, time);
 		tween.setOnComplete(OnTurnComplete);
 	}
 	
-//	private void CustomTurnAround (Vector3 rotAxis, float turnAngle) {
+//	private void TurnAroundTheHardWay (Vector3 rotAxis, float turnAngle) {
 //		Ray ray = new Ray(
 //		var endTan = Quaternion.AngleAxis(turnAngle, rot) * ray.direction;
 //		ray.direction = endTan;
@@ -145,15 +154,14 @@ public class Torpedo : MonoBehaviour {
 //		tween.setOnUpdate(OnUpdateDebug);
 //		OnStartDebug();
 //	}
-	
-	public void OnStartDebug() {
-		Vector3 lpt = Vector3.up;
-		foreach (var pt in tween.path.pts) {
-			if (lpt != Vector3.up) {
-				Debug.DrawLine(lpt, pt, Color.green, 20f);
-			}
-			lpt = pt;
-		}
-	}
+//	public void OnStartDebug() {
+//		Vector3 lpt = Vector3.up;
+//		foreach (var pt in tween.path.pts) {
+//			if (lpt != Vector3.up) {
+//				Debug.DrawLine(lpt, pt, Color.green, 20f);
+//			}
+//			lpt = pt;
+//		}
+//	}
 	
 }
