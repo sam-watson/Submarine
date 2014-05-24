@@ -5,4 +5,5 @@ public class NavPanelMap : PanelMap {
 
 	public UIButton leftButton;
 	public UIButton rightButton;
+	public UIButton throttle;
 }

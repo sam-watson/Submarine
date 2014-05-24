@@ -20,8 +20,8 @@ public class ButtonNavState : State {
 	public override void Enter (StateContext context)
 	{
 		base.Enter (context);
-		navPanelMap.leftButton.GetComponent<NavButtonHelper>().Setup(-3f, periscope);
-		navPanelMap.rightButton.GetComponent<NavButtonHelper>().Setup(3f, periscope);
+		navPanelMap.leftButton.GetComponent<NavButtonBrain>().Setup(-3f, periscope);
+		navPanelMap.rightButton.GetComponent<NavButtonBrain>().Setup(3f, periscope);
 //		EventDelegate.Set( navPanelMap.leftButton.onClick, PanLeft );
 //		EventDelegate.Set( navPanelMap.rightButton.onClick, PanRight );
 	}
