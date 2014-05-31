@@ -24,15 +24,17 @@ public class Periscope : MonoBehaviour {
 		compass.enabled = true;
 #endif
 		camTrans = transform;
-		buttonControl = true;
+		buttonControl = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (angularHeadingAdjustment != 0) {
-			Debug.Log("Turning " + angularHeadingAdjustment);
+		if (buttonControl && angularHeadingAdjustment != 0) {
+//			Debug.Log("Turning " + angularHeadingAdjustment);
 			camTrans.Rotate(0, angularHeadingAdjustment, 0);
 			angularHeadingAdjustment = 0;
+		} else if (Input.GetMouseButton(1)) {
+			camTrans.Rotate(0, Input.GetAxis("Mouse X")*4, 0);
 		}
 	}
 	
@@ -40,6 +42,7 @@ public class Periscope : MonoBehaviour {
 		angularHeadingAdjustment = deltaAngle;
 		Debug.Log("Turn " + deltaAngle);
 	}
+	
 	
 	//stuff that doesn't work
 	private Vector3 HorizontalCompassHeading () {
