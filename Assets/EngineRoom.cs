@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Holoville.HOTween;
 
 public class EngineRoom : MonoBehaviour {
 	
@@ -8,25 +9,27 @@ public class EngineRoom : MonoBehaviour {
 	private GameObject submarine;
 	private Transform subTrans;
 	private LTDescr tween;
+	private Tweener tweener;
 	
 	public float Speed { get{ return curSpeed; }}
 	
 	void Start () {
 		submarine = gameObject;
 		subTrans = submarine.transform;
-		maxSpeed = 30f;
+		maxSpeed = 100f;
 	}
 	
 	public void ChangeSpeed (float delta) {
 		if (delta == 0f) return;
 		float newSpeed = curSpeed + delta;
 		float oldSpeed = curSpeed;
-		curSpeed = Mathf.Clamp(newSpeed, -maxSpeed, maxSpeed);
+		curSpeed = Mathf.Clamp(newSpeed, 0, maxSpeed);
 		float distance = 30f;
 		if (oldSpeed == 0f 	||	 Mathf.Sign(oldSpeed) != Mathf.Sign(newSpeed)) {
 			MoveAlong(distance);
 		} else {
-			tween.time = GetTravelTime(distance);
+			tweener.timeScale = Speed;
+//			tween.time = GetTravelTime(distance);
 		}
 	}
 	
@@ -39,12 +42,15 @@ public class EngineRoom : MonoBehaviour {
 		if (curSpeed != 0) {
 			to = new Ray(subTrans.position, subTrans.forward*Mathf.Sign(curSpeed)).GetPoint(distance);
 		}
-		var time = GetTravelTime(distance);
-		if (tween != null) {
-			tween.cancel();
+		if (tweener != null) {
+			tweener.Kill();
 		}
-		tween = LeanTween.move(submarine, to, time);
-		tween.setOnComplete(MoveAlong);
+		TweenParms straightParms = new TweenParms().Prop("position", subTrans.forward*distance, true)
+			.Loops(-1, LoopType.Incremental)
+			.SpeedBased();
+		tweener = HOTween.To(subTrans, Speed, straightParms);
+//		tween = LeanTween.move(submarine, to, time);
+//		tween.setOnComplete(MoveAlong);
 	}
 	
 	private float GetTravelTime (float distance) {
