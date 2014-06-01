@@ -34,9 +34,10 @@ public class Torpedo : MonoBehaviour {
 		//	(position, speed, turn, launch, distance, onCompletes - type properties set by class or enum)
 		torpedo.target = target;
 		torpedo.trans.position = camTrans.parent.position;
-		torpedo.travelSpeed = 10f;
-		torpedo.turnRadius = 5f;
-		var launchDest = torpedo.GetForwardTrajectory(5f);
+		torpedo.travelSpeed = 100f;
+		torpedo.turnRadius = 30f;
+		torpedo.OrientLaunchPath();
+		var launchDest = torpedo.GetForwardTrajectory(10f);
 		float time = torpedo.GetTravelTime( (launchDest - torpedo.trans.position).magnitude );
 		torpedo.tween = LeanTween.move(torpedobj, launchDest, time);
 		torpedo.tween.setEase(LeanTweenType.easeInCubic);
@@ -52,7 +53,6 @@ public class Torpedo : MonoBehaviour {
 	
 	//startPath = straight launch path method
 	private Vector3 GetForwardTrajectory (float distance) {
-		OrientLaunchPath();
 		var ray = new Ray(camTrans.parent.position, camTrans.forward);
 		return ray.GetPoint(distance);
 	}
@@ -62,7 +62,9 @@ public class Torpedo : MonoBehaviour {
 	}
 	
 	private void OrientLaunchPath () {
-		trans.forward = camTrans.forward;
+		var camParent = camTrans.parent;
+		trans.position = camParent.position;
+		trans.forward = camParent.forward;
 	}
 	
 	public void OnLaunchComplete () {
