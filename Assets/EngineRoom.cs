@@ -6,6 +6,8 @@ public class EngineRoom : MonoBehaviour {
 	
 	private float curSpeed;
 	private float maxSpeed;
+	private float minTurnRadius;
+	private int curTurn;
 	private GameObject submarine;
 	private Transform subTrans;
 	private LTDescr tween;
@@ -52,6 +54,13 @@ public class EngineRoom : MonoBehaviour {
 //		tween = LeanTween.move(submarine, to, time);
 //		tween.setOnComplete(MoveAlong);
 	}
+	
+//	private void Turn(int delta) {
+//		var newTurn = curTurn + delta;
+//		var sn = Mathf.Sign(delta);
+//		var fwd = subTrans.forward;
+//		var tan = new Vector3(fwd.z*
+//	}
 	
 	private float GetTravelTime (float distance) {
 		return distance / curSpeed;

@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Holoville.HOTween;
 
 public class Torpedo : MonoBehaviour {
 	
 	//instance info - path behavior
 	public LTDescr tween;
+	public Tweener tweener;
 	
 	float turnRadius;
 	float travelSpeed;
@@ -34,19 +36,19 @@ public class Torpedo : MonoBehaviour {
 		//	(position, speed, turn, launch, distance, onCompletes - type properties set by class or enum)
 		torpedo.target = target;
 		torpedo.trans.position = camTrans.parent.position;
-		torpedo.travelSpeed = 100f;
+		torpedo.travelSpeed = 80f;
 		torpedo.turnRadius = 30f;
 		torpedo.OrientLaunchPath();
 		var launchDest = torpedo.GetForwardTrajectory(10f);
 		float time = torpedo.GetTravelTime( (launchDest - torpedo.trans.position).magnitude );
-		torpedo.tween = LeanTween.move(torpedobj, launchDest, time);
-		torpedo.tween.setEase(LeanTweenType.easeInCubic);
-		torpedo.tween.setOnComplete(torpedo.OnLaunchComplete);
-		torpedo.tween.setOnUpdate(torpedo.OnUpdate);
+		var torpParms = new TweenParms().Prop("position", launchDest)
+			.Ease(EaseType.EaseInQuart)
+			.OnComplete(torpedo.OnLaunchComplete);
+		torpedo.tweener = HOTween.To(torpedo.trans, time, torpParms);
 		return torpedo;
 	}
 			
-	public void OnUpdate(float id) {
+	public void OnUpdate() {
 		var pos = trans.position;
 		Debug.DrawLine(pos, pos, Color.red, 10f);
 	}
@@ -72,9 +74,24 @@ public class Torpedo : MonoBehaviour {
 	}
 	
 	public void OnTurnComplete () {
-		var time = (target - trans.position).magnitude / travelSpeed;
-		tween = LeanTween.move(gameObject, target, time);
-		tween.setDestroyOnComplete(true);
+		var relativeDest = target - trans.position;
+		var time = relativeDest.magnitude / travelSpeed;
+		var parms = new TweenParms().Prop("position", relativeDest, true)
+			.Loops(2, LoopType.Incremental)
+			.OnComplete(SelfDestruct);
+		tweener = HOTween.To(trans, time, parms);
+	}
+	
+	void OnTriggerEnter(Collider other) {
+		HOTween.Kill(other.gameObject);
+		GameObject.Destroy(other.gameObject);
+		HOTween.Kill(tweener);
+		GameObject.Destroy(this.gameObject);
+		Debug.Log("BOOOOM!");
+	}
+				
+	public void SelfDestruct () {
+		GameObject.Destroy(this.gameObject);
 	}
 	
 	private void TurnToTarget () {
@@ -115,8 +132,13 @@ public class Torpedo : MonoBehaviour {
 		trans.parent = parenTrans;
 		var dist = Mathf.Abs(angle/360) * 2*Mathf.PI*turnRadius;
 		var time = GetTravelTime(dist);
-		tween = LeanTween.rotateAround(rotParent, rotAxis, angle, time);
-		tween.setOnComplete(OnTurnComplete);
+		var turnParms = new TweenParms().Prop("eulerAngles", new Vector3(0, angle, 0))
+			.Ease(EaseType.Linear)
+			.OnComplete(OnTurnComplete);
+		tweener = HOTween.To(parenTrans, time, turnParms);
+//		
+//		tween = LeanTween.rotateAround(rotParent, rotAxis, angle, time);
+//		tween.setOnComplete(OnTurnComplete);
 	}
 	
 //	private void TurnAroundTheHardWay (Vector3 rotAxis, float turnAngle) {

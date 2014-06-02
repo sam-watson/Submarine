@@ -218,7 +218,7 @@ GameObject:
   - 136: {fileID: 362508237}
   - 23: {fileID: 362508236}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Hull
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1221,7 +1221,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 1772424389}
   m_GameObject: {fileID: 1309810229}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1000, y: .0500000007, z: 1000}
@@ -2051,6 +2051,14 @@ Prefab:
     - target: {fileID: 400006, guid: 005a03105f0d1404ea2830bd00c9832f, type: 2}
       propertyPath: m_LocalScale.z
       value: 1.50999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 005a03105f0d1404ea2830bd00c9832f, type: 2}
+      propertyPath: m_Name
+      value: Hull
+      objectReference: {fileID: 0}
+    - target: {fileID: 6500000, guid: 005a03105f0d1404ea2830bd00c9832f, type: 2}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 005a03105f0d1404ea2830bd00c9832f, type: 2}
