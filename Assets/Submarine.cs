@@ -4,6 +4,7 @@ using System.Collections;
 public class Submarine : MonoBehaviour {
 
 	public EngineRoom engineRoom;
+	public FireControl fireControl;
 	public Periscope periscope;
 	
 	private static Submarine _Instance;
@@ -20,9 +21,19 @@ public class Submarine : MonoBehaviour {
 		_Instance = this;
 	}
 	
+	void Start () {
+		fireControl = new FireControl();
+	}
+	
 	public static EngineRoom EngineRoom {
 		get {
 			return Instance.engineRoom;
+		}
+	}
+	
+	public static FireControl FireControl {
+		get {
+			return Instance.fireControl;
 		}
 	}
 	

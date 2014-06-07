@@ -16,7 +16,7 @@ public class ClickHandler : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetMouseButtonDown(0) && GetWaterHit()) {
-			var torpedo = Torpedo.Launch(torpPrefab, waterHit.point);
+			var torpedo = Submarine.FireControl.Launch<Torpedo>(waterHit.point);
 		}
 	}
 	
