@@ -9,6 +9,7 @@ public class Torpedo : MonoBehaviour {
 
 	protected float launchDistance = 10f;
 	protected float travelSpeed = 80f;
+	protected float travelRange = 15f; //in seconds
 	protected float turnRadius = 30f;
 	
 	protected Transform trans;
@@ -24,7 +25,18 @@ public class Torpedo : MonoBehaviour {
 		float time = GetTravelTime(launchDistance);
 		var launchParms = GetLaunchParms();
 		tweener = HOTween.To(trans, time, launchParms);
+		collider.isTrigger = false;
+		StartCoroutine(TimedEvents());
 		return this;
+	}
+	
+	IEnumerator TimedEvents () {
+		// arm warhead
+		yield return new WaitForSeconds(1f);
+		collider.isTrigger = true;
+		// out of fuel - sink
+		yield return new WaitForSeconds(travelRange);
+		SelfDestruct();
 	}
 	
 	protected virtual void SetAtLaunchPoint () {
@@ -48,14 +60,17 @@ public class Torpedo : MonoBehaviour {
 	}
 		
 	public virtual void OnTriggerEnter(Collider other) {
-		HOTween.Kill(other.gameObject);
-		GameObject.Destroy(other.gameObject);
+		if (other.tag != "Player") {
+			HOTween.Kill(other.gameObject);
+			GameObject.Destroy(other.gameObject);
+		}
 		HOTween.Kill(tweener);
 		GameObject.Destroy(this.gameObject);
 		Debug.Log("BOOOOM!");
 	}
 				
 	public void SelfDestruct () {
+		HOTween.Kill(tweener);
 		GameObject.Destroy(this.gameObject);
 	}
 	
@@ -107,8 +122,8 @@ public class Torpedo : MonoBehaviour {
 		var relativeDest = target - trans.position;
 		var time = GetTravelTime(relativeDest.magnitude);
 		var parms = new TweenParms().Prop("position", relativeDest, true)
-//			.Loops(3, LoopType.Incremental)
-			.OnComplete(SelfDestruct);
+			.Loops(-1, LoopType.Incremental)
+			.Ease(EaseType.Linear);
 		tweener.ResetAndChangeParms(TweenType.To, time, parms);
 	}
 	
