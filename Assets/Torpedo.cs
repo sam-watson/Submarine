@@ -25,7 +25,7 @@ public class Torpedo : MonoBehaviour {
 		trans = gameObject.transform;
 	}
 	
-	// inputs: type, origin and target vectors, path behavior(angle, deviance, distance, speed)
+	// necessary prior inputs: (TODO:origin) and target vectors
 	public virtual Torpedo Launch () {
 		SetAtLaunchPoint();
 		float time = GetTravelTime(launchDistance);
