@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Mobs : MonoBehaviour {
 	
 	public GameObject mobPrefab;
-	public int mobSpeed = 10;
+	public int mobSpeed = 40;
 	public int minDist = 40;
 	public int pathSize = 5;
 	public int pathFat = 10;

@@ -21,7 +21,7 @@ public class StateManager : MonoBehaviour {
 		}
 		_Instance = this;
 		new ButtonNavState().Enter(new StateContext());
-		mobs.InitSharks(10);
+		mobs.InitSharks(2);
 		mobs.InitAllUrBass(2);
 	}
 }
