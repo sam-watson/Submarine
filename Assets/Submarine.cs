@@ -7,6 +7,8 @@ public class Submarine : MonoBehaviour {
 	public FireControl fireControl;
 	public Periscope periscope;
 	
+	private Transform trans;
+	
 	private static Submarine _Instance;
 	public static Submarine Instance {
 		get {
@@ -19,6 +21,7 @@ public class Submarine : MonoBehaviour {
 			Debug.Log("!!!Created more than one instance of Submarine!!!");
 		}
 		_Instance = this;
+		trans = transform;
 	}
 	
 	void Start () {
@@ -40,6 +43,12 @@ public class Submarine : MonoBehaviour {
 	public static Periscope Periscope {
 		get {
 			return Instance.periscope;
+		}
+	}
+	
+	public static Transform Trans {
+		get {
+			return Instance.trans;
 		}
 	}
 }

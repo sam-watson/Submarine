@@ -4,6 +4,7 @@ using Holoville.HOTween;
 
 public class Torpedo : MonoBehaviour {
 	
+	public Transform origin; // better as a gameobject anatomy script from which torpedo selects a launch point
 	public Vector3 target;
 
 	protected float launchDistance = 10f;
@@ -12,14 +13,6 @@ public class Torpedo : MonoBehaviour {
 	
 	protected Transform trans;
 	protected Tweener tweener;
-	
-	protected Transform _camTrans;
-	protected Transform camTrans {
-		get {
-			if (_camTrans == null) {_camTrans = Camera.main.transform;}
-			return _camTrans;
-		}
-	}
 	
 	void Awake () {
 		trans = gameObject.transform;
@@ -35,9 +28,8 @@ public class Torpedo : MonoBehaviour {
 	}
 	
 	protected virtual void SetAtLaunchPoint () {
-		var camParent = camTrans.parent;
-		trans.position = camParent.position;
-		trans.forward = camParent.forward;
+		trans.position = origin.position;
+		trans.forward = origin.forward;
 	}
 	
 	protected virtual float GetTravelTime (float distance) {

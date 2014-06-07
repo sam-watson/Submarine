@@ -5,18 +5,15 @@ public class ClickHandler : MonoBehaviour {
 	//TODO: make singleton class
 	
 	public Collider water;
-	private GameObject torpPrefab;
 	private RaycastHit waterHit;
 	
 	// Use this for initialization
-	void Start () {
-		torpPrefab = Resources.Load<GameObject>("Torpedo");
-	}
+	void Start () {}
 	
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetMouseButtonDown(0) && GetWaterHit()) {
-			var torpedo = Submarine.FireControl.Launch<Torpedo>(waterHit.point);
+			Submarine.FireControl.Launch<Torpedo>(Submarine.Trans, waterHit.point);
 		}
 	}
 	
