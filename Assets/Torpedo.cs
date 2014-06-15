@@ -6,6 +6,8 @@ public class Torpedo : MonoBehaviour {
 	
 	public Transform origin; // better as a gameobject anatomy script from which torpedo selects a launch point
 	public Vector3 target;
+	
+	public GameObject explosionPrefab;
 
 	protected float launchDistance = 10f;
 	protected float travelSpeed = 80f;
@@ -19,7 +21,6 @@ public class Torpedo : MonoBehaviour {
 		trans = gameObject.transform;
 	}
 	
-	// necessary prior inputs: (TODO:origin) and target vectors
 	public virtual Torpedo Launch () {
 		SetAtLaunchPoint();
 		float time = GetTravelTime(launchDistance);
@@ -36,7 +37,7 @@ public class Torpedo : MonoBehaviour {
 		collider.isTrigger = true;
 		// out of fuel - sink
 		yield return new WaitForSeconds(travelRange);
-		SelfDestruct();
+		Expire();
 	}
 	
 	protected virtual void SetAtLaunchPoint () {
@@ -64,12 +65,17 @@ public class Torpedo : MonoBehaviour {
 			HOTween.Kill(other.gameObject);
 			GameObject.Destroy(other.gameObject);
 		}
-		HOTween.Kill(tweener);
-		GameObject.Destroy(this.gameObject);
+		Explode();
 		Debug.Log("BOOOOM!");
 	}
+	
+	public void Explode () {
+		var splosion = (GameObject)Object.Instantiate(explosionPrefab, trans.position, Quaternion.identity);
+		var explosion = splosion.AddComponent<Explosion>();
+		Expire();
+	}
 				
-	public void SelfDestruct () {
+	public void Expire () {
 		HOTween.Kill(tweener);
 		GameObject.Destroy(this.gameObject);
 	}
