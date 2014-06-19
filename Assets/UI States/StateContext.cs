@@ -3,5 +3,9 @@ using System.Collections;
 
 public class StateContext {
 
-	//nunyet
+	public StateManager manager;
+	
+	public StateContext (StateManager manager) {
+		this.manager = manager;
+	}
 }
