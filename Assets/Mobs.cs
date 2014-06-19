@@ -4,6 +4,12 @@ using System.Collections.Generic;
 
 public class Mobs : MonoBehaviour {
 	
+	/*mobs manager state machine -
+	 * - player movement, position, health, weapons
+	 * - objectives
+	 * - mobs count, health, positions, weapons
+	 */
+	
 	public GameObject mobPrefab;
 	public int mobSpeed = 40;
 	public int minDist = 40;
@@ -22,6 +28,14 @@ public class Mobs : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {}
+	
+	protected T CreateMob <T> (Vector3 position) where T : Mob {
+		//instantiate a prefab
+		var mobj = (GameObject)Object.Instantiate(mobPrefab, position, Quaternion.identity);
+		var mob = mobj.AddComponent<T>();
+		//add components if needed - er, fc, hull, state
+		return mob;
+	}
 	
 	public void InitAllUrBass (int numberOfBass) {
 		for (int i = 0; i < numberOfBass; i++) {

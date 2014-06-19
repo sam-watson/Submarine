@@ -2,10 +2,17 @@
 using System.Collections;
 
 public class Mob : MonoBehaviour {
-
+	
+	public EngineRoom engineRoom;
 	public FireControl fireControl;
 	
+	protected StateManager command;
+	
+	protected Transform trans;
+	
 	void Start () {
+		trans = transform;
+		engineRoom = new EngineRoom();
 		fireControl = new FireControl();
 		StartCoroutine(FireAtWill());
 	}
