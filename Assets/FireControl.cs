@@ -20,7 +20,7 @@ public class FireControl {
 		var torpedo = torpedobj.AddComponent<T>();
 		torpedo.origin = origin;
 		torpedo.target = target;
-		torpedo.explosion = explosionPrefab;
+		torpedo.explosionPrefab = explosionPrefab;
 		return (T)torpedo.Launch();
 	}
 }
