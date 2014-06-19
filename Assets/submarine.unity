@@ -494,130 +494,6 @@ Transform:
   m_LocalScale: {x: .660000026, y: .0199999996, z: .00999999978}
   m_Children: []
   m_Father: {fileID: 270991300}
---- !u!1 &631052889
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100044, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
-  m_PrefabInternal: {fileID: 199298652}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 631052890}
-  - 114: {fileID: 631052893}
-  - 114: {fileID: 631052892}
-  - 114: {fileID: 631052891}
-  m_Layer: 8
-  m_Name: Speed Label
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &631052890
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400044, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
-  m_PrefabInternal: {fileID: 199298652}
-  m_GameObject: {fileID: 631052889}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: .329589844, z: 0}
-  m_LocalScale: {x: 1.00007999, y: 1.00007999, z: 1.00007999}
-  m_Children: []
-  m_Father: {fileID: 1756191464}
---- !u!114 &631052891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400050, guid: cd15a6a1a67ce6b42bbf3008fcf945b4,
-    type: 2}
-  m_PrefabInternal: {fileID: 199298652}
-  m_GameObject: {fileID: 631052889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8077b76001d36d489868d20d28bddb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiCamera: {fileID: 451444736}
-  container: {fileID: 0}
-  side: 8
-  halfPixelOffset: 1
-  runOnlyOnce: 0
-  relativeOffset: {x: 0, y: 0}
-  pixelOffset: {x: 0, y: 0}
-  widgetContainer: {fileID: 0}
---- !u!114 &631052892
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400052, guid: cd15a6a1a67ce6b42bbf3008fcf945b4,
-    type: 2}
-  m_PrefabInternal: {fileID: 199298652}
-  m_GameObject: {fileID: 631052889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e2747e3775af504da1a4d5a46c5a1ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  method: 0
-  style: 0
-  animationCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  ignoreTimeScale: 1
-  delay: 0
-  duration: 1
-  steeperCurves: 0
-  tweenGroup: 0
-  onFinished: []
-  eventReceiver: {fileID: 0}
-  callWhenFinished: 
-  from: 1
-  to: 1
---- !u!114 &631052893
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400054, guid: cd15a6a1a67ce6b42bbf3008fcf945b4,
-    type: 2}
-  m_PrefabInternal: {fileID: 199298652}
-  m_GameObject: {fileID: 631052889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9d0b5f3bbe925a408bd595c79d0bf63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mColor: {r: .375, g: .279918849, b: .237132356, a: 1}
-  mPivot: 4
-  mWidth: 0
-  mHeight: 0
-  mDepth: 0
-  autoResizeBoxCollider: 0
-  keepCrispWhenShrunk: 1
-  mTrueTypeFont: {fileID: 0}
-  mFont: {fileID: 0}
-  mText: 
-  mFontSize: 40
-  mFontStyle: 0
-  mEncoding: 1
-  mMaxLineCount: 0
-  mEffectStyle: 2
-  mEffectColor: {r: .992647052, g: .992647052, b: .992647052, a: 1}
-  mSymbols: 1
-  mEffectDistance: {x: 1, y: 1}
-  mOverflow: 2
-  mShrinkToFit: 0
-  mMaxLineWidth: 0
-  mMaxLineHeight: 0
-  mLineWidth: 0
-  mMultiline: 1
 --- !u!1 &875025844
 GameObject:
   m_ObjectHideFlags: 0
@@ -870,7 +746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6862d1e51c47d042ab9849fc970ea3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedLabel: {fileID: 631052893}
+  speedLabel: {fileID: 0}
 --- !u!1 &1055933542
 GameObject:
   m_ObjectHideFlags: 0
@@ -1909,7 +1785,7 @@ GameObject:
   - 114: {fileID: 1756191465}
   - 114: {fileID: 1756191466}
   m_Layer: 8
-  m_Name: Nav Buttons
+  m_Name: Buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1928,7 +1804,6 @@ Transform:
   - {fileID: 1521256333}
   - {fileID: 1652549821}
   - {fileID: 997409793}
-  - {fileID: 631052890}
   m_Father: {fileID: 1339188865}
 --- !u!114 &1756191465
 MonoBehaviour:
