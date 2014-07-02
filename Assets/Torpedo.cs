@@ -16,6 +16,7 @@ public class Torpedo : MonoBehaviour {
 	
 	protected Transform trans;
 	protected Tweener tweener;
+	protected GameObject rotParent; // TODO: make this part of prefabs
 	
 	void Awake () {
 		trans = gameObject.transform;
@@ -77,7 +78,8 @@ public class Torpedo : MonoBehaviour {
 				
 	public void Expire () {
 		HOTween.Kill(tweener);
-		GameObject.Destroy(this.gameObject);
+		Object.Destroy(this.gameObject);
+		if (rotParent != null) Object.Destroy(rotParent);
 	}
 	
 	protected void TurnToTarget () {
@@ -111,7 +113,7 @@ public class Torpedo : MonoBehaviour {
 	}
 	
 	protected void TurnAbout(Vector3 point, float angle) {
-		var rotParent = new GameObject();
+		rotParent = new GameObject();
 		var parenTrans = rotParent.transform;
 		parenTrans.position = point;
 		trans.parent = parenTrans;

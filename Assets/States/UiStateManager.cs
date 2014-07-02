@@ -19,7 +19,8 @@ public class UiStateManager : StateManager {
 		}
 		_Instance = this;
 		new ButtonNavState().Enter(new StateContext(this));
-		mobs.InitSharks(2);
-		mobs.InitAllUrBass(2);
+		//mobs.InitSharks(0);
+		//mobs.InitAllUrBass(0);
+		mobs.InitBlockade(15);
 	}
 }

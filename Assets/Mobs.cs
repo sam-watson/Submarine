@@ -29,12 +29,32 @@ public class Mobs : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {}
 	
-	protected T CreateMob <T> (Vector3 position) where T : Mob {
-		//instantiate a prefab
-		var mobj = (GameObject)Object.Instantiate(mobPrefab, position, Quaternion.identity);
+	protected T CreateMob <T> (GameObject prefab, Vector3 position) where T : Mob {
+		//instantiate a prefab - I guess from a dict
+		var mobj = (GameObject)Object.Instantiate(prefab, position, Quaternion.identity);
 		var mob = mobj.AddComponent<T>();
+		Debug.Log("Creating mob");
 		//add components if needed - er, fc, hull, state
 		return mob;
+	}
+	
+	public void InitBlockade (int number) {
+		var subTrans = Submarine.Trans;
+		var subPos = subTrans.position;
+		var endPos = subTrans.forward * 1000 + subPos;
+		var carrier = CreateMob<Carrier>(Carrier.GetPrefab(), endPos);
+		for (int i = 0; i < number; i++) {
+			Ray ray = new Ray(endPos, subTrans.forward*-1);
+			var rot = Quaternion.Euler(0, Random.Range(-45f, 45f), 0);
+			ray.direction = rot * ray.direction;
+			var mobPos = ray.GetPoint(Random.Range(500f, 1500f));
+			var mob = CreateMob<Mob>(Mob.GetPrefab(), mobPos);
+			//startstate
+			var mobRot = Vector3.Angle(mob.Trans.forward, endPos-mobPos);
+			mob.startState = new MoveState();
+			//mob.Trans.Rotate(0f, mobRot, 0f);
+			mob.Trans.forward = endPos-mobPos;
+		}
 	}
 	
 	public void InitAllUrBass (int numberOfBass) {

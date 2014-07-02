@@ -25,7 +25,7 @@ public class Submarine : MonoBehaviour {
 	}
 	
 	void Start () {
-		fireControl = new FireControl();
+		fireControl = gameObject.AddComponent<FireControl>();
 	}
 	
 	public static EngineRoom EngineRoom {

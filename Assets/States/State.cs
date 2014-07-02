@@ -4,6 +4,7 @@ using System.Collections;
 public abstract class State {
 	
 	protected StateContext context;
+	public StateContext Context { get { return context; }}
 
 	public virtual void Enter (StateContext context) {
 		this.context = context;
