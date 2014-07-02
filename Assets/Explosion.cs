@@ -9,6 +9,6 @@ public class Explosion : MonoBehaviour {
 	
 	void Update () {
 		time += Time.deltaTime;
-		if (time >= duration) Object.Destroy(this);
+		if (time >= duration) Object.Destroy(this.gameObject);
 	}
 }
