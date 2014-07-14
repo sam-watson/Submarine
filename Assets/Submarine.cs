@@ -3,12 +3,9 @@ using System.Collections;
 
 public class Submarine : MonoBehaviour {
 
-	public EngineRoom engineRoom;
-	public FireControl fireControl;
+	public Mob mob;
 	public Periscope periscope;
-	
-	private Transform trans;
-	
+		
 	private static Submarine _Instance;
 	public static Submarine Instance {
 		get {
@@ -21,22 +18,21 @@ public class Submarine : MonoBehaviour {
 			Debug.Log("!!!Created more than one instance of Submarine!!!");
 		}
 		_Instance = this;
-		trans = transform;
+		mob = gameObject.AddComponent<Mob>();
 	}
 	
 	void Start () {
-		fireControl = gameObject.AddComponent<FireControl>();
 	}
 	
 	public static EngineRoom EngineRoom {
 		get {
-			return Instance.engineRoom;
+			return Instance.mob.engineRoom;
 		}
 	}
 	
 	public static FireControl FireControl {
 		get {
-			return Instance.fireControl;
+			return Instance.mob.fireControl;
 		}
 	}
 	
@@ -48,7 +44,7 @@ public class Submarine : MonoBehaviour {
 	
 	public static Transform Trans {
 		get {
-			return Instance.trans;
+			return Instance.mob.Trans;
 		}
 	}
 }

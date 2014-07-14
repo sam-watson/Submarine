@@ -17,10 +17,15 @@ public class Mob : MonoBehaviour {
 		trans = transform;
 	}
 	
+	public virtual void AssignAttributes (ref float accel, ref float speed) {
+		accel = 1f;
+		speed = 30f;
+	}
+	
 	void Start () {
 		engineRoom = gameObject.AddComponent<EngineRoom>();
 		fireControl = gameObject.AddComponent<FireControl>();
-		StartCoroutine(FireAtWill());
+		//StartCoroutine(FireAtWill());
 		command = gameObject.AddComponent<MobStateManager>();
 		if (startState != null) {
 			startState.Enter(new StateContext(command));

@@ -21,6 +21,6 @@ public class UiStateManager : StateManager {
 		new ButtonNavState().Enter(new StateContext(this));
 		//mobs.InitSharks(0);
 		//mobs.InitAllUrBass(0);
-		mobs.InitBlockade(15);
+		mobs.InitBlockade(1);
 	}
 }
