@@ -19,6 +19,7 @@ public class ThrottleButtonBrain : ButtonBrain {
 				speedLabel.text = Submarine.EngineRoom.Speed.ToString();
 			}
 		}
+		label.text = Submarine.EngineRoom.RealSpeed.ToString("N1");
 	}
 	
 	protected override void OnPress (bool isPressed) {

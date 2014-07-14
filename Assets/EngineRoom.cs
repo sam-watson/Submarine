@@ -19,6 +19,7 @@ public class EngineRoom : MonoBehaviour {
 	private Tweener spTweener;
 	
 	public float Speed { get { return setSpeed; }}
+	public float RealSpeed { get { return curSpeed; }}
 	
 	void Awake () {
 		trans = transform;
