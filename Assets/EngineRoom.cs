@@ -48,12 +48,11 @@ public class EngineRoom : MonoBehaviour {
 		newSpeed = Mathf.Clamp(newSpeed, 0, maxSpeed);
 		if (newSpeed == setSpeed) { return; }
 		setSpeed = newSpeed;
-		var diff = setSpeed - curSpeed;
 		if (tweener == null) { //or direction change (reverse)
 			MoveAlong();
 		}
-		if (diff > 0) Accel(false);
-		if (diff < 0) Accel(true);
+		var diff = setSpeed - curSpeed;
+		Accel(diff < 0);
 	}
 	
 	public void ChangeSpeed (float delta) {
