@@ -46,15 +46,14 @@ public class EngineRoom : MonoBehaviour {
 			return;
 		}		
 		newSpeed = Mathf.Clamp(newSpeed, 0, maxSpeed);
-		var diff = newSpeed - setSpeed;
-		if (diff == 0) { return; }
+		if (newSpeed == setSpeed) { return; }
 		setSpeed = newSpeed;
-		Debug.Log(tweener);
-		if (tweener == null) {
+		var diff = setSpeed - curSpeed;
+		if (tweener == null) { //or direction change (reverse)
 			MoveAlong();
 		}
-		if (diff > 0) Accel();
-		if (diff < 0) Decel();
+		if (diff > 0) Accel(false);
+		if (diff < 0) Accel(true);
 	}
 	
 	public void ChangeSpeed (float delta) {
@@ -70,28 +69,33 @@ public class EngineRoom : MonoBehaviour {
 		Vector3 to = trans.forward * distance;
 		TweenParms straightParms = new TweenParms().Prop("position", trans.forward*distance, true)
 			.Loops(-1, LoopType.Incremental)
-			.SpeedBased();
+			.SpeedBased()
+			.TimeScale(0f);
 		tweener = HOTween.To(trans, maxSpeed, straightParms);
-		tweener.timeScale = curSpeed/maxSpeed;
 	}
 	
-	private void TweenSpeed (float to) {
-		TweenParms spParms = new TweenParms().Prop("timeScale", to).SpeedBased();
+	private void SpeedTween () {
+		tweener.timeScale = 0f;
+		TweenParms spParms = new TweenParms().Prop("timeScale", 1f).SpeedBased();
 		spParms.OnUpdate(OnSpeedUpdate);
 		var pctAccel = maxAccel/maxSpeed;
-		spTweener = HOTween.To(tweener, pctAccel, spParms); //maxAccel is expressed as a percentage of maxSpeed
+		spTweener = HOTween.To(tweener, pctAccel, spParms);
+		spTweener.GoToAndPlay(curSpeed/maxSpeed);
 	}
-	private void Accel () {
-		TweenSpeed(1f);
-	}
-	private void Decel () {
-		TweenSpeed(0f);
+	
+	private void Accel (bool decel) {
+		if (spTweener == null) { SpeedTween(); }
+		if (spTweener.isReversed != decel) {
+			spTweener.Reverse();
+		}
+		spTweener.Play();
 	}
 	
 	public void OnSpeedUpdate () {
 		curSpeed = tweener.timeScale * maxSpeed;
-		if (curSpeed >= setSpeed) {
-			spTweener.Kill();
+		if ((curSpeed < setSpeed) == spTweener.isReversed) {
+			Debug.Log("speed match, cur: "+ curSpeed+ " ,set: "+ setSpeed+ " Accel: "+ !spTweener.isReversed);
+			spTweener.Pause();
 			tweener.timeScale = setSpeed/maxSpeed;
 			curSpeed = setSpeed;
 			return;
