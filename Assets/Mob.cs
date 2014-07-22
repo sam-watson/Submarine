@@ -17,9 +17,10 @@ public class Mob : MonoBehaviour {
 		trans = transform;
 	}
 	
-	public virtual void AssignAttributes (ref float accel, ref float speed) {
-		accel = 1f;
+	public virtual void AssignAttributes (ref float speed, ref float accel, ref float turn) {
 		speed = 30f;
+		accel = 1f;
+		turn = 40f;
 	}
 	
 	void Start () {

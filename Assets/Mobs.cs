@@ -49,11 +49,10 @@ public class Mobs : MonoBehaviour {
 			ray.direction = rot * ray.direction;
 			var mobPos = ray.GetPoint(Random.Range(500f, 1500f));
 			var mob = CreateMob<Mob>(Mob.GetPrefab(), mobPos);
-			//startstate
-			var mobRot = Vector3.Angle(mob.Trans.forward, endPos-mobPos);
+			//var mobRot = Vector3.Angle(mob.Trans.forward, endPos-mobPos);
+			mob.Trans.Rotate(0f, Random.Range(0f, 360f), 0f);
 			mob.startState = new MoveState();
-			//mob.Trans.Rotate(0f, mobRot, 0f);
-			mob.Trans.forward = endPos-mobPos;
+			//mob.Trans.forward = endPos-mobPos;
 		}
 	}
 	

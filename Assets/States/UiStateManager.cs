@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Holoville.HOTween;
 
 public class UiStateManager : StateManager {
 
@@ -19,6 +20,8 @@ public class UiStateManager : StateManager {
 		}
 		_Instance = this;
 		new ButtonNavState().Enter(new StateContext(this));
+		HOTween.Init(false, false, true);
+		HOTween.EnableOverwriteManager();
 		//mobs.InitSharks(0);
 		//mobs.InitAllUrBass(0);
 		mobs.InitBlockade(3);
