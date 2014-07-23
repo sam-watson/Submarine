@@ -33,7 +33,7 @@ public class Mob : MonoBehaviour {
 	}
 	
 	public static GameObject GetPrefab () {
-		string prefabName = Mathf.RoundToInt(Random.value) == 0 ? "battleship01" : "patrol boat01";
+		string prefabName = Mathf.RoundToInt(Random.value) == 0 ? "battleship z front y up" : "battleship z up y front";
 		var prefab = (GameObject)Resources.Load(prefabName);
 		return prefab;
 	}

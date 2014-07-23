@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Holoville.HOTween;
+using Holoville.HOTween.Plugins;
 
 public class EngineRoom : MonoBehaviour {
 	
@@ -16,6 +17,7 @@ public class EngineRoom : MonoBehaviour {
 	public Transform Trans { get { return trans ?? transform ; }}
 	
 	private Tweener tweener;
+	private Tweener depthTweener;
 	private Tweener spTweener;
 	
 	public float Speed { get { return setSpeed; }}
@@ -27,9 +29,7 @@ public class EngineRoom : MonoBehaviour {
 	
 	void Start () {
 		SetAttributes(null);
-		if (tweener == null && startSpeed != 0) {
-			SetSpeed(startSpeed);
-		}
+		SetSpeed(startSpeed);
 	}
 	
 	public void SetAttributes (Mob mob) {
@@ -49,6 +49,7 @@ public class EngineRoom : MonoBehaviour {
 		if (newSpeed == setSpeed) { return; }
 		setSpeed = newSpeed;
 		if (tweener == null) { //or direction change (reverse)
+			Debug.Log("priming path");
 			MoveAlong();
 		}
 		var diff = setSpeed - curSpeed;
@@ -58,6 +59,21 @@ public class EngineRoom : MonoBehaviour {
 	public void ChangeSpeed (float delta) {
 		if (delta == 0f) return;
 		SetSpeed(Speed + delta);
+	}
+	
+	public void Dive () {
+		if (depthTweener == null) {
+			var depthParms = new TweenParms().Prop("position", new PlugVector3Y(-10f))
+				.AutoKill(false);
+			var pos = Trans.position;
+			Trans.position = new Vector3(pos.x, 0f, pos.z);
+			depthTweener = HOTween.To(Trans, 10f, depthParms);
+		}
+		depthTweener.PlayForward();
+	}
+	
+	public void Surf () {
+		depthTweener.PlayBackwards(); //Bug: will not work if sub started moving after submerge
 	}
 	
 	private void MoveAlong() {

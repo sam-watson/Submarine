@@ -45,7 +45,7 @@ public class Mobs : MonoBehaviour {
 		var carrier = CreateMob<Carrier>(Carrier.GetPrefab(), endPos);
 		for (int i = 0; i < number; i++) {
 			Ray ray = new Ray(endPos, subTrans.forward*-1);
-			var rot = Quaternion.Euler(0, Random.Range(-45f, 45f), 0);
+			var rot = Quaternion.Euler(0, Random.Range(-20f, 20f), 0);
 			ray.direction = rot * ray.direction;
 			var mobPos = ray.GetPoint(Random.Range(500f, 1500f));
 			var mob = CreateMob<Mob>(Mob.GetPrefab(), mobPos);
