@@ -35,6 +35,7 @@ public class EngineRoom : MonoBehaviour {
 	
 	void Start () {
 		SetAttributes(null);
+		SetCourse();
 		SetSpeed(startSpeed);
 	}
 	
@@ -49,7 +50,7 @@ public class EngineRoom : MonoBehaviour {
 	public void SetDestination (Vector3 position) {
 		dest = position;
 		if (!init) { return; }
-		MoveAlong();
+		SetCourse();
 	}
 	
 	public void SetSpeed (float newSpeed) {
@@ -60,12 +61,8 @@ public class EngineRoom : MonoBehaviour {
 		newSpeed = Mathf.Clamp(newSpeed, 0, maxSpeed);
 		if (newSpeed == setSpeed) { return; }
 		setSpeed = newSpeed;
-		if (tweener == null) { //or direction change (reverse)
-			Debug.Log("priming path");
-			MoveAlong();
-		}
 		var diff = setSpeed - curSpeed;
-		Accel(diff < 0);
+		if (diff != 0) Accel(diff < 0);
 	}
 	
 	public void ChangeSpeed (float delta) {
@@ -85,10 +82,10 @@ public class EngineRoom : MonoBehaviour {
 	}
 	
 	public void Surf () {
-		depthTweener.PlayBackwards(); //Bug: will not work if sub started moving after submerge
+		depthTweener.PlayBackwards();
 	}
 	
-	private void MoveAlong () {
+	private void SetCourse () {
 		if (dest != nullDest) {
 			var relDest = dest-Trans.position;
 			if (Vector3.Angle(Trans.forward, relDest) != 0) {
@@ -149,7 +146,7 @@ public class EngineRoom : MonoBehaviour {
 		var turnParms = new TweenParms().Prop("eulerAngles", new Vector3(0, angle, 0))
 			.SpeedBased()
 			.TimeScale(0f)
-			.OnComplete(MoveAlong);
+			.OnComplete(SetCourse);
 		tweener = HOTween.To(rotTrans, maxTurnSpeed, turnParms);
 	}
 	
