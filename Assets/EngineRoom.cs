@@ -14,12 +14,14 @@ public class EngineRoom : MonoBehaviour {
 	private float curSpeed;
 	private float setSpeed;
 	private float startSpeed;
+	private float normSpeed { get { return curSpeed/maxSpeed; }}
 	private Vector3 nullDest = new Vector3(0,1000,0);
 	private Vector3 dest;
 	
-	private Transform rotTrans;
+	private Transform moveTrans;
 	private Transform trans;
-	public Transform Trans { get { return trans ?? transform ; }}
+	//public Transform MoveTrans { get { return moveTrans; }}
+	//public Transform ShipTrans { get { return trans ?? transform ; }}
 	
 	private Tweener tweener;
 	private Tweener depthTweener;
@@ -30,16 +32,18 @@ public class EngineRoom : MonoBehaviour {
 	
 	void Awake () {
 		trans = transform;
-		dest = nullDest;
+		moveTrans = new GameObject().transform;
+		trans.parent = moveTrans;
 	}
 	
 	void Start () {
-		SetAttributes(null);
-		SetCourse();
+		InitAttributes(null);
+		SetDestination(nullDest);
+		SetSpeedTween();
 		SetSpeed(startSpeed);
 	}
 	
-	public void SetAttributes (Mob mob) {
+	public void InitAttributes (Mob mob) {
 		if (mob == null) {
 			mob = GetComponent<Mob>();
 		}
@@ -62,7 +66,7 @@ public class EngineRoom : MonoBehaviour {
 		if (newSpeed == setSpeed) { return; }
 		setSpeed = newSpeed;
 		var diff = setSpeed - curSpeed;
-		if (diff != 0) Accel(diff < 0);
+		Accel(diff < 0);
 	}
 	
 	public void ChangeSpeed (float delta) {
@@ -74,9 +78,9 @@ public class EngineRoom : MonoBehaviour {
 		if (depthTweener == null) {
 			var depthParms = new TweenParms().Prop("position", new PlugVector3Y(-10f))
 				.AutoKill(false);
-			var pos = Trans.position;
-			Trans.position = new Vector3(pos.x, 0f, pos.z);
-			depthTweener = HOTween.To(Trans, 10f, depthParms);
+			var pos = moveTrans.position;
+			moveTrans.position = new Vector3(pos.x, 0f, pos.z);
+			depthTweener = HOTween.To(moveTrans, 10f, depthParms);
 		}
 		depthTweener.PlayForward();
 	}
@@ -87,10 +91,11 @@ public class EngineRoom : MonoBehaviour {
 	
 	private void SetCourse () {
 		if (dest != nullDest) {
-			var relDest = dest-Trans.position;
-			if (Vector3.Angle(Trans.forward, relDest) != 0) {
+			var relDest = dest-trans.position;
+			if (Vector3.Angle(trans.forward, relDest) != 0) {
 				TurnToDestination();
 			} else {
+				Debug.Log("moving str8 to dest");
 				MoveStraight(relDest.magnitude);
 				tweener.ApplyCallback(CallbackType.OnStepComplete, OnDestReached);
 			}
@@ -103,8 +108,8 @@ public class EngineRoom : MonoBehaviour {
 		TweenParms straightParms = new TweenParms().Prop("position", trans.forward*distance, true)
 			.Loops(-1, LoopType.Incremental)
 			.SpeedBased()
-			.TimeScale(0f);
-		tweener = HOTween.To(trans, maxSpeed, straightParms);
+			.TimeScale(normSpeed);
+		tweener = HOTween.To(moveTrans, maxSpeed, straightParms);
 	}
 	
 	protected void TurnToDestination () {
@@ -121,7 +126,7 @@ public class EngineRoom : MonoBehaviour {
 		if (originToTarget.magnitude < turnRadius) {
 			//target is within turning radius, torpedo needs to turn later to get to it
 			MoveStraight(10f);
-			tweener.ApplyCallback (CallbackType.OnComplete, TurnToDestination);
+			tweener.ApplyCallback (CallbackType.OnStepComplete, TurnToDestination);
 			return;
 			// could also use quadratic equation to find precise distance - vector intersect with circle on plane
 		}
@@ -138,37 +143,39 @@ public class EngineRoom : MonoBehaviour {
 	
 	protected void TurnAbout (Vector3 point, float angle) {
 		Debug.Log("turn tween start");
-		var rotParent = new GameObject();
-		rotTrans = rotParent.transform;
-		rotTrans.position = point;
-		trans.parent = rotTrans;
+		moveTrans.DetachChildren();
+		moveTrans.position = point;
+		trans.parent = moveTrans;
 		var maxTurnSpeed = GetAngularSpeed(maxSpeed, turnRadius);
 		var turnParms = new TweenParms().Prop("eulerAngles", new Vector3(0, angle, 0))
 			.SpeedBased()
-			.TimeScale(0f)
+			.TimeScale(normSpeed)
 			.OnComplete(SetCourse);
-		tweener = HOTween.To(rotTrans, maxTurnSpeed, turnParms);
+		tweener = HOTween.To(moveTrans, maxTurnSpeed, turnParms);
 	}
 	
 	private float GetAngularSpeed (float speed, float radius) {
 		return (speed/(2*Mathf.PI*radius))*360;
 	}
 	
-	private void SpeedTween () {
+	private void SetSpeedTween () {
 		tweener.timeScale = 0f;
-		TweenParms spParms = new TweenParms().Prop("timeScale", 1f).SpeedBased();
-		spParms.OnUpdate(OnSpeedUpdate);
+		TweenParms spParms = new TweenParms()
+			.Prop("timeScale", 1f)
+			.SpeedBased()
+			.OnUpdate(OnSpeedUpdate);
 		var pctAccel = maxAccel/maxSpeed;
 		spTweener = HOTween.To(tweener, pctAccel, spParms);
-		spTweener.GoToAndPlay(curSpeed/maxSpeed);
+		spTweener.GoTo(normSpeed);
+		spTweener.Pause();
 	}
 	
 	private void Accel (bool decel) {
-		if (spTweener == null) { SpeedTween(); }
+		if (spTweener == null) { SetSpeedTween(); }
 		if (spTweener.isReversed != decel) {
 			spTweener.Reverse();
 		}
-		spTweener.Play();
+		spTweener.GoToAndPlay(normSpeed);
 	}
 	
 	public void OnSpeedUpdate () {
@@ -183,6 +190,7 @@ public class EngineRoom : MonoBehaviour {
 	}
 	
 	public void OnDestReached () {
+		Debug.Log("dest reached");
 		dest = nullDest;
 	}
 }
