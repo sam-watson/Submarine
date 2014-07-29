@@ -3,10 +3,14 @@ using System.Collections;
 
 public class MoveState : MobState {
 	
+	public Vector3 destination;
+	
 	public override void Enter (StateContext context) {
 		base.Enter (context);
-		mob.engineRoom.SetDestination(Submarine.Trans.forward * 1000 + Submarine.Trans.position);
+		if (destination != null) {
+			mob.engineRoom.SetDestination(destination);
+			Debug.Log(mob.Id + " Course Laid: " + context.destination);
+		}
 		mob.engineRoom.SetSpeed(10f);
-		Debug.Log("Course Laid");
 	} 
 }

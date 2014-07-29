@@ -16,25 +16,20 @@ public class Mobs : MonoBehaviour {
 	public int pathSize = 5;
 	public int pathFat = 10;
 	
-	private List<GameObject> allMobs = new List<GameObject>();
+//	private List<Mob> allMobs = new List<Mob>();
 	private Transform trans;
 	private Transform camTrans;
 	
-	// Use this for initialization
 	void Awake () {
 		trans = gameObject.transform;
 		camTrans = Camera.main.transform;
 	}
 	
-	// Update is called once per frame
-	void Update () {}
-	
 	protected T CreateMob <T> (GameObject prefab, Vector3 position) where T : Mob {
-		//instantiate a prefab - I guess from a dict
 		var mobj = (GameObject)Object.Instantiate(prefab, position, Quaternion.identity);
 		var mob = mobj.AddComponent<T>();
 		Debug.Log("Creating mob");
-		//add components if needed - er, fc, hull, state
+//		allMobs.Add(mob);
 		return mob;
 	}
 	
@@ -42,6 +37,7 @@ public class Mobs : MonoBehaviour {
 		var subTrans = Submarine.Trans;
 		var subPos = subTrans.position;
 		var endPos = subTrans.forward * 1000 + subPos;
+		Debug.Log("end pos: "+ endPos);
 		var carrier = CreateMob<Carrier>(Carrier.GetPrefab(), endPos);
 		for (int i = 0; i < number; i++) {
 			Ray ray = new Ray(endPos, subTrans.forward*-1);
@@ -51,7 +47,9 @@ public class Mobs : MonoBehaviour {
 			var mob = CreateMob<Mob>(Mob.GetPrefab(), mobPos);
 			//var mobRot = Vector3.Angle(mob.Trans.forward, endPos-mobPos);
 			mob.Trans.Rotate(0f, Random.Range(0f, 360f), 0f);
-			mob.startState = new MoveState();
+			var move = new MoveState();
+			move.destination = endPos;
+			mob.startState = move;
 			//mob.Trans.forward = endPos-mobPos;
 		}
 	}
@@ -59,7 +57,7 @@ public class Mobs : MonoBehaviour {
 	public void InitAllUrBass (int numberOfBass) {
 		for (int i = 0; i < numberOfBass; i++) {
 			var bass = (GameObject)GameObject.Instantiate(mobPrefab);
-			allMobs.Add(bass);
+//			allMobs.Add(bass);
 			var bassTrans = bass.transform;
 			bassTrans.parent = trans;
 			Vector2 randXY = Random.insideUnitCircle*500;
@@ -74,7 +72,7 @@ public class Mobs : MonoBehaviour {
 	public void InitSharks (int numberOfSharks) {
 		for (int i = 0; i < numberOfSharks; i++) {
 			var shark = (GameObject)GameObject.Instantiate(mobPrefab);
-			allMobs.Add(shark);
+//			allMobs.Add(shark);
 			var sharkTrans = shark.transform;
 			sharkTrans.parent = trans;
 			Vector2 randXY = Random.insideUnitCircle*100;

@@ -1027,6 +1027,38 @@ Prefab:
       propertyPath: mobs
       value: 
       objectReference: {fileID: 1196552070}
+    - target: {fileID: 400046, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -353.627228
+      objectReference: {fileID: 0}
+    - target: {fileID: 400046, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -353.29834
+      objectReference: {fileID: 0}
+    - target: {fileID: 400018, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -488.342407
+      objectReference: {fileID: 0}
+    - target: {fileID: 400040, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 488.342407
+      objectReference: {fileID: 0}
+    - target: {fileID: 400026, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 353.627228
+      objectReference: {fileID: 0}
+    - target: {fileID: 400026, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -353.29834
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400024, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
+      propertyPath: mWidth
+      value: 85
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400024, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
+      propertyPath: mText
+      value: Dive!
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
   m_RootGameObject: {fileID: 1613990725}
@@ -2642,14 +2674,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 108
+  mWidth: 85
   mHeight: 32
   mDepth: 3
   autoResizeBoxCollider: 0
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 1226837270, guid: 0000000000000000d000000000000000, type: 0}
   mFont: {fileID: 0}
-  mText: Engine
+  mText: Dive!
   mFontSize: 32
   mFontStyle: 0
   mEncoding: 1

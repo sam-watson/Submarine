@@ -6,6 +6,7 @@ using Holoville.HOTween.Plugins;
 public class EngineRoom : MonoBehaviour {
 	
 	private bool init;
+	private Mob mob;
 	
 	private float maxAccel;
 	private float maxSpeed;
@@ -34,16 +35,18 @@ public class EngineRoom : MonoBehaviour {
 		trans = transform;
 		moveTrans = new GameObject().transform;
 		trans.parent = moveTrans;
+		mob = GetComponent<Mob>();
+		dest = nullDest;
 	}
 	
 	void Start () {
-		InitAttributes(null);
-		SetDestination(nullDest);
+		InitAttributes();
+		SetDestination(dest);
 		SetSpeedTween();
 		SetSpeed(startSpeed);
 	}
 	
-	public void InitAttributes (Mob mob) {
+	public void InitAttributes () {
 		if (mob == null) {
 			mob = GetComponent<Mob>();
 		}
@@ -52,6 +55,7 @@ public class EngineRoom : MonoBehaviour {
 	}
 	
 	public void SetDestination (Vector3 position) {
+		Debug.Log(mob.Id + " dest set to: " + position);
 		dest = position;
 		if (!init) { return; }
 		SetCourse();
@@ -95,7 +99,7 @@ public class EngineRoom : MonoBehaviour {
 			if (Vector3.Angle(trans.forward, relDest) != 0) {
 				TurnToDestination();
 			} else {
-				Debug.Log("moving str8 to dest");
+				Debug.Log("moving str8 to dest: " + dest.ToString());
 				MoveStraight(relDest.magnitude);
 				tweener.ApplyCallback(CallbackType.OnStepComplete, OnDestReached);
 			}
@@ -181,7 +185,7 @@ public class EngineRoom : MonoBehaviour {
 	public void OnSpeedUpdate () {
 		curSpeed = tweener.timeScale * maxSpeed;
 		if ((curSpeed < setSpeed) == spTweener.isReversed) {
-			Debug.Log("speed match, cur: "+ curSpeed+ " ,set: "+ setSpeed+ " Accel: "+ !spTweener.isReversed);
+			Debug.Log("speed match, cur: "+ curSpeed+ ", set: "+ setSpeed+ " Accel: "+ !spTweener.isReversed + " Dest: " + dest);
 			spTweener.Pause();
 			tweener.timeScale = setSpeed/maxSpeed;
 			curSpeed = setSpeed;
