@@ -3,11 +3,13 @@ using System.Collections;
 
 public class Mob : MonoBehaviour {
 	
+	public string Id { get { return this.GetType().ToString();}}
+	public int crNum;
+	
 	public EngineRoom engineRoom;
 	public FireControl fireControl;
 	
 	protected StateManager command;
-	
 	public State startState;
 	
 	protected Transform trans;
