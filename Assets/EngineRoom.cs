@@ -99,7 +99,7 @@ public class EngineRoom : MonoBehaviour {
 			if (Vector3.Angle(trans.forward, relDest) != 0) {
 				TurnToDestination();
 			} else {
-				Debug.Log("moving str8 to dest: " + dest.ToString());
+				//Debug.Log("moving str8 to dest: " + dest.ToString());
 				MoveStraight(relDest.magnitude);
 				tweener.ApplyCallback(CallbackType.OnStepComplete, OnDestReached);
 			}
@@ -117,7 +117,7 @@ public class EngineRoom : MonoBehaviour {
 	}
 	
 	protected void TurnToDestination () {
-		Debug.Log("turn start");
+		//Debug.Log("turn start");
 		var pos = trans.position;
 		var crowFlies = dest - pos;
 		var tan = crowFlies;
@@ -146,7 +146,7 @@ public class EngineRoom : MonoBehaviour {
 	}
 	
 	protected void TurnAbout (Vector3 point, float angle) {
-		Debug.Log("turn tween start");
+		//Debug.Log("turn tween start");
 		moveTrans.DetachChildren();
 		moveTrans.position = point;
 		trans.parent = moveTrans;
@@ -163,6 +163,7 @@ public class EngineRoom : MonoBehaviour {
 	}
 	
 	private void SetSpeedTween () {
+		//Debug.Log(mob.Id + " setting sp tween");
 		tweener.timeScale = 0f;
 		TweenParms spParms = new TweenParms()
 			.Prop("timeScale", 1f)
@@ -179,7 +180,7 @@ public class EngineRoom : MonoBehaviour {
 		if (spTweener.isReversed != decel) {
 			spTweener.Reverse();
 		}
-		spTweener.GoToAndPlay(normSpeed);
+		spTweener.Play();
 	}
 	
 	public void OnSpeedUpdate () {
