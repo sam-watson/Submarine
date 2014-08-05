@@ -9,7 +9,7 @@ public class MoveState : MobState {
 		base.Enter (context);
 		if (destination != null) {
 			mob.engineRoom.SetDestination(destination);
-			Debug.Log(mob.Id + " Course Laid: " + context.destination);
+			Debug.Log(mob.Id + " Course Laid: " + destination);
 		}
 		mob.engineRoom.SetSpeed(10f);
 	} 
