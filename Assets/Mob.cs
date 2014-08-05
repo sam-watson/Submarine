@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Mob : MonoBehaviour {
 	
-	public string Id { get { return this.GetType().ToString();}}
+	public string Id { get { return System.String.Concat(this.GetType().ToString(), crNum);}}
 	public int crNum;
 	
 	public EngineRoom engineRoom;
