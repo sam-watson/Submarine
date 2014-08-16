@@ -36,6 +36,7 @@ public class EngineRoom : MonoBehaviour {
 		moveTrans = new GameObject().transform;
 		trans.parent = moveTrans;
 		mob = GetComponent<Mob>();
+		moveTrans.name = mob.Id + " mvmt";
 		dest = nullDest;
 	}
 	
@@ -186,7 +187,7 @@ public class EngineRoom : MonoBehaviour {
 	public void OnSpeedUpdate () {
 		curSpeed = tweener.timeScale * maxSpeed;
 		if ((curSpeed < setSpeed) == spTweener.isReversed) {
-			Debug.Log("speed match, cur: "+ curSpeed+ ", set: "+ setSpeed+ " Accel: "+ !spTweener.isReversed + " Dest: " + dest);
+			Debug.Log(mob.Id + " speed match, cur: "+ curSpeed+ ", set: "+ setSpeed+ ", accel: "+ !spTweener.isReversed + ", dest: " + dest);
 			spTweener.Pause();
 			tweener.timeScale = setSpeed/maxSpeed;
 			curSpeed = setSpeed;
@@ -195,7 +196,7 @@ public class EngineRoom : MonoBehaviour {
 	}
 	
 	public void OnDestReached () {
-		Debug.Log("dest reached");
+		Debug.Log(mob.Id + " dest reached");
 		dest = nullDest;
 	}
 }

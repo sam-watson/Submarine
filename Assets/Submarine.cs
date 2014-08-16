@@ -19,6 +19,7 @@ public class Submarine : MonoBehaviour {
 		}
 		_Instance = this;
 		mob = gameObject.AddComponent<Mob>();
+		mob.crNum = -1;
 	}
 	
 	void Start () {
