@@ -20,9 +20,9 @@ public class Mob : MonoBehaviour {
 	}
 	
 	public virtual void AssignAttributes (ref float speed, ref float accel, ref float turn) {
-		speed = 30f;
+		speed = 20f;
 		accel = 1f;
-		turn = 40f;
+		turn = 50f;
 	}
 	
 	void Start () {
@@ -36,8 +36,8 @@ public class Mob : MonoBehaviour {
 	}
 	
 	public static GameObject GetPrefab () {
-		string prefabName = Mathf.RoundToInt(Random.value) == 0 ? "battleship z front y up" : "battleship z up y front";
-		var prefab = (GameObject)Resources.Load(prefabName);
+		string prefabName = Mathf.RoundToInt(Random.value) == 0 ? "battleship" : "patrol boat";
+		var prefab = (GameObject)Resources.Load("Models/"+prefabName);
 		return prefab;
 	}
 	

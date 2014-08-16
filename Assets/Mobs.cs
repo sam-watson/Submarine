@@ -28,9 +28,10 @@ public class Mobs : MonoBehaviour {
 	protected T CreateMob <T> (GameObject prefab, Vector3 position) where T : Mob {
 		var mobj = (GameObject)Object.Instantiate(prefab, position, Quaternion.identity);
 		var mob = mobj.AddComponent<T>();
-		Debug.Log("Creating mob");
+		Debug.Log("Creating " + mob.GetType().ToString() + ", position " + position);
 		allMobs.Add(mob);
 		mob.crNum = allMobs.IndexOf(mob);
+		mob.gameObject.name = mob.Id;
 		return mob;
 	}
 	

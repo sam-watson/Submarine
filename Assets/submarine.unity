@@ -385,7 +385,8 @@ Prefab:
       propertyPath: m_RootMapOrder
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11400008, guid: 005a03105f0d1404ea2830bd00c9832f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 005a03105f0d1404ea2830bd00c9832f, type: 2}
   m_RootGameObject: {fileID: 1196552068}
   m_IsPrefabParent: 0
@@ -2122,7 +2123,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1654551018}
   - 114: {fileID: 1654551020}
-  - 114: {fileID: 1654551019}
   m_Layer: 0
   m_Name: Player Submarine
   m_TagString: Player
@@ -2144,18 +2144,6 @@ Transform:
   - {fileID: 362508235}
   m_Father: {fileID: 1196552069}
   m_RootOrder: 0
---- !u!114 &1654551019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400008, guid: 005a03105f0d1404ea2830bd00c9832f,
-    type: 2}
-  m_PrefabInternal: {fileID: 352015560}
-  m_GameObject: {fileID: 1654551017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4be0c0c2340b9c469cbfe547cfa14b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1654551020
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ public class FireControl : MonoBehaviour {
 	}
 	
 	void Init () {
-		torpedoPrefab = (GameObject)Resources.Load("torpedo", typeof(GameObject));
+		torpedoPrefab = (GameObject)Resources.Load("Models/torpedo", typeof(GameObject));
 		explosionPrefab = (GameObject)Resources.Load("explosion", typeof(GameObject));
 	}
 	
