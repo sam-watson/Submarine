@@ -1054,12 +1054,36 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400024, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
       propertyPath: mWidth
-      value: 85
+      value: 73
       objectReference: {fileID: 0}
     - target: {fileID: 11400024, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
       propertyPath: mText
       value: Dive!
       objectReference: {fileID: 0}
+    - target: {fileID: 11400050, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
+      propertyPath: mTrueTypeFont
+      value: 
+      objectReference: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 11400062, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
+      propertyPath: mWidth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400062, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
+      propertyPath: mTrueTypeFont
+      value: 
+      objectReference: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 11400024, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
+      propertyPath: mTrueTypeFont
+      value: 
+      objectReference: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 11400048, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
+      propertyPath: mTrueTypeFont
+      value: 
+      objectReference: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 11400012, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
+      propertyPath: mTrueTypeFont
+      value: 
+      objectReference: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cd15a6a1a67ce6b42bbf3008fcf945b4, type: 2}
   m_RootGameObject: {fileID: 1613990725}
@@ -1835,7 +1859,7 @@ MonoBehaviour:
   mDepth: 1
   autoResizeBoxCollider: 0
   keepCrispWhenShrunk: 1
-  mTrueTypeFont: {fileID: 0}
+  mTrueTypeFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   mFont: {fileID: 0}
   mText: Button
   mFontSize: 16
@@ -2478,7 +2502,7 @@ MonoBehaviour:
   mDepth: 3
   autoResizeBoxCollider: 0
   keepCrispWhenShrunk: 1
-  mTrueTypeFont: {fileID: 0}
+  mTrueTypeFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   mFont: {fileID: 0}
   mText: Button
   mFontSize: 16
@@ -2662,12 +2686,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 85
+  mWidth: 73
   mHeight: 32
   mDepth: 3
   autoResizeBoxCollider: 0
   keepCrispWhenShrunk: 1
-  mTrueTypeFont: {fileID: 1226837270, guid: 0000000000000000d000000000000000, type: 0}
+  mTrueTypeFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   mFont: {fileID: 0}
   mText: Dive!
   mFontSize: 32
@@ -2726,12 +2750,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 108
+  mWidth: 100
   mHeight: 32
   mDepth: 3
   autoResizeBoxCollider: 0
   keepCrispWhenShrunk: 1
-  mTrueTypeFont: {fileID: 1226837270, guid: 0000000000000000d000000000000000, type: 0}
+  mTrueTypeFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   mFont: {fileID: 0}
   mText: Engine
   mFontSize: 32
