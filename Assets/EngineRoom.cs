@@ -169,7 +169,8 @@ public class EngineRoom : MonoBehaviour {
 		TweenParms spParms = new TweenParms()
 			.Prop("timeScale", 1f)
 			.SpeedBased()
-			.OnUpdate(OnSpeedUpdate);
+			.OnUpdate(OnSpeedUpdate)
+			.AutoKill(false);
 		var pctAccel = maxAccel/maxSpeed;
 		spTweener = HOTween.To(tweener, pctAccel, spParms);
 		spTweener.GoTo(normSpeed);
