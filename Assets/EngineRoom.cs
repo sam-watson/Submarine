@@ -12,7 +12,7 @@ public class EngineRoom : MonoBehaviour {
 	private float maxSpeed;
 	private float turnRadius;
 	
-	private float curSpeed;
+	public float curSpeed;
 	private float setSpeed;
 	private float startSpeed;
 	private float normSpeed { get { return curSpeed/maxSpeed; }}
@@ -43,7 +43,7 @@ public class EngineRoom : MonoBehaviour {
 	void Start () {
 		InitAttributes();
 		SetDestination(dest);
-		//SetSpeedTween();
+		SetSpeedTween();
 		SetSpeed(startSpeed);
 	}
 	
@@ -70,6 +70,10 @@ public class EngineRoom : MonoBehaviour {
 		newSpeed = Mathf.Clamp(newSpeed, 0, maxSpeed);
 		if (newSpeed == setSpeed) { return; }
 		setSpeed = newSpeed;
+		MatchSpeed();
+	}
+	
+	private void MatchSpeed () {
 		var diff = setSpeed - curSpeed;
 		Accel(diff < 0);
 	}
@@ -116,7 +120,6 @@ public class EngineRoom : MonoBehaviour {
 			.SpeedBased()
 			.TimeScale(normSpeed);
 		tweener = HOTween.To(moveTrans, maxSpeed, straightParms);
-		CheckSpeedTween();
 	}
 	
 	protected void TurnToDestination () {
@@ -159,45 +162,25 @@ public class EngineRoom : MonoBehaviour {
 			.TimeScale(normSpeed)
 			.OnComplete(SetCourse);
 		tweener = HOTween.To(moveTrans, maxTurnSpeed, turnParms);
-		CheckSpeedTween();
 	}
 	
 	private float GetAngularSpeed (float speed, float radius) {
 		return (speed/(2*Mathf.PI*radius))*360;
 	}
 	
-	private void MatchSpeed () {
-		var diff = setSpeed - curSpeed;
-		Accel(diff < 0);
-	}
-	
-	private void CheckSpeedTween () {
-		if (spTweener == null) {
-			SetSpeedTween();
-		} else if (spTweener.target != tweener) {
-			ResetSpeedTween();
-		}
-	}
-	
-	private void ResetSpeedTween () {
-		spTweener.Kill(true);
-		SetSpeedTween();
-		MatchSpeed();
-	}
-	
 	private void SetSpeedTween () {
 		//Debug.Log(mob.Id + " setting sp tween");
-		tweener.timeScale = 0f;
+		var cacheSpeed = curSpeed;
+		curSpeed = 0;
 		TweenParms spParms = new TweenParms()
-			.Prop("timeScale", 1f)
+			.Prop("curSpeed", maxSpeed)
 			.SpeedBased()
 			.OnUpdate(OnSpeedUpdate)
 			.AutoKill(false);
-		var pctAccel = maxAccel/maxSpeed;
-		spTweener = HOTween.To(tweener, pctAccel, spParms);
-		spTweener.GoTo(normSpeed);
-		Debug.Log(mob.Id + " sp now at " + spTweener.elapsed + ", should be " + normSpeed);
-		//spTweener.Pause();
+		spTweener = HOTween.To(this, maxAccel, spParms);
+		spTweener.GoTo(cacheSpeed/maxAccel);
+		spTweener.Pause();
+		//Debug.Log(mob.Id + " sp now at " + spTweener.elapsed + ", should be " + normSpeed);
 	}
 	
 	private void Accel (bool decel) {
@@ -209,12 +192,12 @@ public class EngineRoom : MonoBehaviour {
 	}
 	
 	public void OnSpeedUpdate () {
-		curSpeed = tweener.timeScale * maxSpeed;
+		tweener.timeScale = normSpeed;
 		if ((curSpeed < setSpeed) == spTweener.isReversed) {
 			Debug.Log(mob.Id + " speed match, cur: "+ curSpeed+ ", set: "+ setSpeed+ ", accel: "+ !spTweener.isReversed + ", dest: " + dest);
 			spTweener.Pause();
 			tweener.timeScale = setSpeed/maxSpeed;
-			curSpeed = setSpeed;
+			spTweener.GoTo(setSpeed/maxAccel);
 			return;
 		}
 	}
