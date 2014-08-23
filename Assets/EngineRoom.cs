@@ -102,7 +102,7 @@ public class EngineRoom : MonoBehaviour {
 		if (spTweener != null) spTweener.Pause(); //TODO refactor shit
 		if (dest != nullDest) {
 			var relDest = dest-trans.position;
-			if (Vector3.Angle(trans.forward, relDest) != 0) {
+			if (Mathf.Abs( Vector3.Angle(trans.forward, relDest) ) >= 1) {
 				TurnToDestination();
 			} else {
 				//Debug.Log("moving str8 to dest: " + dest.ToString());
@@ -112,9 +112,11 @@ public class EngineRoom : MonoBehaviour {
 		} else {
 			MoveStraight(20f);
 		}
+		if (spTweener != null) spTweener.Play();
 	}
 	
 	private void MoveStraight (float distance) {
+		if (tweener != null) tweener.Kill(true);
 		TweenParms straightParms = new TweenParms().Prop("position", trans.forward*distance, true)
 			.Loops(-1, LoopType.Incremental)
 			.SpeedBased()
@@ -136,7 +138,7 @@ public class EngineRoom : MonoBehaviour {
 		if (originToTarget.magnitude < turnRadius) {
 			//target is within turning radius, torpedo needs to turn later to get to it
 			MoveStraight(10f);
-			tweener.ApplyCallback (CallbackType.OnStepComplete, TurnToDestination);
+			tweener.ApplyCallback (CallbackType.OnStepComplete, SetCourse);
 			return;
 			// could also use quadratic equation to find precise distance - vector intersect with circle on plane
 		}
@@ -152,12 +154,15 @@ public class EngineRoom : MonoBehaviour {
 	}
 	
 	protected void TurnAbout (Vector3 point, float angle) {
-		//Debug.Log("turn tween start");
+		if (tweener != null) tweener.Kill(true);
+		Debug.Log(mob.Id + " turn start, pre position: "+ trans.position + ", turn pivot: " + point + ", angle: " + angle);
 		moveTrans.DetachChildren();
 		moveTrans.position = point;
+		moveTrans.forward = trans.forward;
 		trans.parent = moveTrans;
+		Debug.Log(mob.Id + " now at " + trans.position);
 		var maxTurnSpeed = GetAngularSpeed(maxSpeed, turnRadius);
-		var turnParms = new TweenParms().Prop("eulerAngles", new Vector3(0, angle, 0))
+		var turnParms = new TweenParms().Prop("eulerAngles", new Vector3(0, angle, 0), true)
 			.SpeedBased()
 			.TimeScale(normSpeed)
 			.OnComplete(SetCourse);
