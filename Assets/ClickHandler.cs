@@ -13,8 +13,17 @@ public class ClickHandler : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetMouseButtonDown(0) && GetWaterHit()) {
-			Submarine.FireControl.Launch<Torpedo>(Submarine.Trans, waterHit.point);
+			SetDest();
+			Fire();
 		}
+	}
+	
+	private void SetDest () {
+		Submarine.EngineRoom.SetDestination(waterHit.point);
+	}
+	
+	private void Fire () {
+		Submarine.FireControl.Launch<Torpedo>(Submarine.Trans, waterHit.point);
 	}
 	
 	private bool GetWaterHit() {
@@ -23,6 +32,9 @@ public class ClickHandler : MonoBehaviour {
 		// raytrace from mouse (or touch) against water collider
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		waterHit = new RaycastHit();
+		if (UICamera.Raycast(Input.mousePosition, out waterHit)) {
+			return false;
+		}
 		if (water.Raycast(ray, out waterHit, water.bounds.size.magnitude)) {
 			return true;
 		}
