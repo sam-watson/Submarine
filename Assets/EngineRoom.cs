@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Holoville.HOTween;
 using Holoville.HOTween.Plugins;
 
@@ -31,6 +32,8 @@ public class EngineRoom : MonoBehaviour {
 	public float Speed { get { return setSpeed; }}
 	public float RealSpeed { get { return curSpeed; }}
 	
+	public List<EventDelegate> onDestReached = new List<EventDelegate>();
+	
 	void Awake () {
 		trans = transform;
 		moveTrans = new GameObject().transform;
@@ -60,6 +63,11 @@ public class EngineRoom : MonoBehaviour {
 		dest = position;
 		if (!init) { return; }
 		SetCourse();
+	}
+	
+	public void SetDestination (Vector3 position, EventDelegate callback) {
+		SetDestination(position);
+		EventDelegate.Add(onDestReached, callback);
 	}
 	
 	public void SetSpeed (float newSpeed) {
@@ -210,5 +218,6 @@ public class EngineRoom : MonoBehaviour {
 	public void OnDestReached () {
 		Debug.Log(mob.Id + " dest reached");
 		dest = nullDest;
+		EventDelegate.Execute(onDestReached);
 	}
 }

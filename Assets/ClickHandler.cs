@@ -7,8 +7,13 @@ public class ClickHandler : MonoBehaviour {
 	public Collider water;
 	private RaycastHit waterHit;
 	
+	public LineRenderer navLine;
+	
 	// Use this for initialization
-	void Start () {}
+	void Start () {
+		SetNavLine();
+		navLine.SetPosition(0, Vector3.zero);
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -19,7 +24,15 @@ public class ClickHandler : MonoBehaviour {
 	}
 	
 	private void SetDest () {
-		Submarine.EngineRoom.SetDestination(waterHit.point);
+		Submarine.EngineRoom.SetDestination(waterHit.point, new EventDelegate(ClearDest));
+		navLine.SetPosition(0, waterHit.point);
+		navLine.SetPosition(1, waterHit.point+Vector3.up*5);
+	}
+	
+	public void ClearDest () {
+		Debug.Log("clearing dest");
+		navLine.SetPosition(0, Vector3.zero);
+		navLine.SetPosition(1, Vector3.zero);
 	}
 	
 	private void Fire () {
@@ -27,7 +40,7 @@ public class ClickHandler : MonoBehaviour {
 	}
 	
 	private bool GetWaterHit() {
-		// TODO: GUI check
+		// TODO: fix camera setup probs (layers) and reevaluate placement/structure of gui check (all raycasting thru UICamera?)
 		// TODO: touch
 		// raytrace from mouse (or touch) against water collider
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -39,5 +52,9 @@ public class ClickHandler : MonoBehaviour {
 			return true;
 		}
 		return false;
+	}
+	
+	public void SetNavLine () {
+		navLine = Submarine.Instance.gameObject.AddComponent<LineRenderer>();
 	}
 }
